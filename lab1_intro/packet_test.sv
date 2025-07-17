@@ -9,7 +9,21 @@ Copyright Cadence Design Systems (c)2019
 -----------------------------------------------------------------*/
 
 module packet_test;
+  import packet_pkg::*;
 
+  packet p;
+
+  initial begin
+    p = new("p",0);
+    p.data = 42;
+    p.target = 2;
+    $display("Print default (DEC)");
+    p.print();
+    $display("Print HEX");
+    p.print(HEX);
+    $display("Print BIN");
+    p.print(BIN);
+  end
 
 
 
