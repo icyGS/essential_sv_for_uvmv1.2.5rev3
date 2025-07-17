@@ -1,0 +1,126 @@
+xrun(64): 24.09-s004: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	24.09-s004: Started on Jul 17, 2025 at 18:43:52 EDT
+xrun
+	-f run.f
+		packet_pkg.sv
+		packet_test.sv
+Recompiling... reason: file './packet_data.sv' is newer than expected.
+	expected: Thu Jul 17 18:31:27 2025
+	actual:   Thu Jul 17 18:41:22 2025
+file: packet_pkg.sv
+	package worklib.packet_pkg:sv
+		errors: 0, warnings: 0
+file: packet_test.sv
+	module worklib.packet_test:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		packet_pkg
+		packet_test
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.packet_test:sv <0x0e109120>
+			streams:   3, words:  9202
+		worklib.packet_pkg:sv <0x1d50f475>
+			streams:  12, words:  9984
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                    Instances  Unique
+		Modules:                    1       1
+		Verilog packages:           1       1
+		Registers:                 17      22
+		Initial blocks:             1       1
+		SV Class declarations:      1       1
+		SV Class specializations:   1       1
+	Writing initial simulation snapshot: worklib.packet_test:sv
+Loading snapshot worklib.packet_test:sv .................... Done
+SVSEED default: 1
+xcelium> source /tools/software/cadence/xcelium/latest/tools/xcelium/files/xmsimrc
+xcelium> run
+=== Packet 1 ===
+----------------------------------
+name: p, type: MULTICAST
+from source 1, to target 12, data 213
+----------------------------------
+
+=== Packet 2 ===
+----------------------------------
+name: p, type: SINGLE
+from source 1, to target 2, data 16
+----------------------------------
+
+=== Packet 3 ===
+----------------------------------
+name: p, type: MULTICAST
+from source 1, to target 14, data 76
+----------------------------------
+
+=== Packet 4 ===
+----------------------------------
+name: p, type: SINGLE
+from source 1, to target 8, data 46
+----------------------------------
+
+=== Packet 5 ===
+----------------------------------
+name: p, type: MULTICAST
+from source 1, to target 6, data 163
+----------------------------------
+
+=== Packet 6 ===
+----------------------------------
+name: p, type: SINGLE
+from source 1, to target 4, data 0
+----------------------------------
+
+=== Packet 7 ===
+----------------------------------
+name: p, type: MULTICAST
+from source 1, to target 6, data 1
+----------------------------------
+
+=== Packet 8 ===
+----------------------------------
+name: p, type: MULTICAST
+from source 1, to target 12, data 68
+----------------------------------
+
+=== Packet 9 ===
+----------------------------------
+name: p, type: SINGLE
+from source 1, to target 8, data 13
+----------------------------------
+
+=== Packet 10 ===
+----------------------------------
+name: p, type: SINGLE
+from source 1, to target 4, data 254
+----------------------------------
+
+
+=== Forcing Broadcast Packet (Constraint Violation) ===
+xmsim: *W,RNDOCS: These constraints and variables contribute to the set of conflicting constraints (view the extended help for this message using 'xmhelp xmsim RNDOCS' for guidelines on how debug the issue):
+
+In ./packet_data.sv
+line 33:  ( ( target & source ) == 32'h0 )
+
+In ./packet_test.sv
+line 31:  ( target == 4'hf )
+
+
+Variable  Type         Status        Current Value          Source                      
+----------------------------------------------------------------------------------------
+source    (bit [3:0])  STATE VAR     1 (0x1)                ./packet_data.sv ; line 25
+target    (bit [3:0])  RANDOM        <unassigned>           ./packet_data.sv ; line 24
+
+
+    if (p.randomize() with { target == 4'b1111; ptype != ANY; }) begin
+                  |
+xmsim: *W,SVRNDF (./packet_test.sv,31|18): The randomize method call failed. The unique id of the failed randomize call is 10.
+Observed simulation time : 0 FS + 0.
+ERROR: Failed to randomize broadcast packet
+xmsim: *W,RNQUIE: Simulation is complete.
+xcelium> exit
+TOOL:	xrun(64)	24.09-s004: Exiting on Jul 17, 2025 at 18:43:52 EDT  (total: 00:00:00)

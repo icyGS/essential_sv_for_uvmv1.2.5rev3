@@ -15,16 +15,26 @@ module packet_test;
 
   initial begin
     p = new("p",0);
-    p.data = 42;
-    p.target = 2;
-    $display("Print default (DEC)");
-    p.print();
-    $display("Print HEX");
-    p.print(HEX);
-    $display("Print BIN");
-    p.print(BIN);
+    
+    // Randomize and print packet 10 times
+    for (int i = 0; i < 10; i++) begin
+      if (p.randomize() with { ptype != ANY; }) begin
+        $display("=== Packet %0d ===", i+1);
+        p.print();
+      end else begin
+        $display("ERROR: Failed to randomize packet %0d", i+1);
+      end
+    end
+    
+    // Force constraint violation with inline constraint for broadcast packet
+    $display("\n=== Forcing Broadcast Packet (Constraint Violation) ===");
+    if (p.randomize() with { target == 4'b1111; ptype != ANY; }) begin
+      $display("Broadcast packet created (violates no_shared_bits constraint):");
+      p.print();
+    end else begin
+      $display("ERROR: Failed to randomize broadcast packet");
+    end
   end
-
 
 
 

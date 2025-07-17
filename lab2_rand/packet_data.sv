@@ -21,10 +21,26 @@ class packet;
   // add properties here
   local string name;
 
-  bit [3:0] target;
+  rand bit [3:0] target;
   bit [3:0] source;
-  bit [7:0] data;
-  ptype_t ptype;
+  rand bit [7:0] data;
+  rand ptype_t ptype;
+
+  // constraint to ensure target is not 0
+  constraint valid_target { target != 0; }
+  
+  // constraint to ensure target doesn't share bits with source
+  constraint no_shared_bits { (target & source) == 0; }
+  
+  // conditional constraints based on packet type
+  constraint ptype_target_constraint {
+    if (ptype == SINGLE)
+      $countones(target) == 1;
+    else if (ptype == MULTICAST)
+      $countones(target) inside {[2:3]};
+    else if (ptype == BROADCAST)
+      target == 4'hF;
+  }
 
   // constructor sets source and packet type
   function new ( string name, int idt);
@@ -53,12 +69,6 @@ class packet;
   endfunction
 
 
-
-
-
-  // add constructor to set instance name and source by arguments and packet type
-
- // add print with policy
  
 endclass
 
