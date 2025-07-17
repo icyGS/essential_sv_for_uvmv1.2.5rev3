@@ -1,0 +1,58 @@
+xrun(64): 24.09-s004: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	24.09-s004: Started on Jul 17, 2025 at 17:40:44 EDT
+xrun
+	-f run.f
+		packet_pkg.sv
+		packet_test.sv
+file: packet_pkg.sv
+	package worklib.packet_pkg:sv
+		errors: 0, warnings: 0
+file: packet_test.sv
+	module worklib.packet_test:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		packet_pkg
+		packet_test
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.packet_test:sv <0x07d23af4>
+			streams:   3, words:  7891
+		worklib.packet_pkg:sv <0x688a784b>
+			streams:  10, words:  8756
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                    Instances  Unique
+		Modules:                    1       1
+		Verilog packages:           1       1
+		Registers:                 16      21
+		Initial blocks:             1       1
+		SV Class declarations:      1       1
+		SV Class specializations:   1       1
+	Writing initial simulation snapshot: worklib.packet_test:sv
+Loading snapshot worklib.packet_test:sv .................... Done
+xcelium> source /tools/software/cadence/xcelium/latest/tools/xcelium/files/xmsimrc
+xcelium> run
+Print default (DEC)
+----------------------------------
+name: p, type: ANY
+from source 1, to target 2, data 42
+----------------------------------
+
+Print HEX
+----------------------------------
+name: p, type: ANY
+from source 1, to target 2, data 2a
+----------------------------------
+
+Print BIN
+----------------------------------
+name: p, type: ANY
+from source 0001, to target 0010, data 00101010
+----------------------------------
+
+xmsim: *W,RNQUIE: Simulation is complete.
+xcelium> exit
+TOOL:	xrun(64)	24.09-s004: Exiting on Jul 17, 2025 at 17:40:47 EDT  (total: 00:00:03)
